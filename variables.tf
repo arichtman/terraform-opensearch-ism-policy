@@ -37,6 +37,7 @@ variable "states" {
       #  but REconstruct the object after filtering
       # We may be able to use compact() later or a conditional
       # Ref: https://github.com/hashicorp/terraform/issues/28264#issuecomment-831941670
+      # Ref: https://github.com/hashicorp/terraform/issues/19898
       delete = optional(map(any), {})
       force_merge = optional(object({
         max_num_segments       = number
