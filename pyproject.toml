@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "terraform-aws-route53-migadu-email-domain"
+version = "0.1.0"
+description = "Development tooling for a Terraform module"
+authors = ["Richtman, Ariel <10679234+arichtman@users.noreply.github.com>"]
+license = "GPL-3.0+"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^3.3.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
