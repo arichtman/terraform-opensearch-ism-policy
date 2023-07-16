@@ -27,5 +27,5 @@ locals {
 
 # TODO: remove after development
 output "debug" {
-  value = local.filtered_actions
+  value = local.states
 }
