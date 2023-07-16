@@ -22,33 +22,35 @@ variable "priority" {
 variable "states" {
   type = list(object({
     name = string
-    actions = set(object({
-      retry = object({
-        count   = number
-        backoff = optional(string)
-        delay   = optional(string)
-      })
-      # TODO: current issue is this
-      # Either we make this entire actions set arbitrary maps
-      # Or we need to make the unset keys disappear
-      #  as the key = null fouls against the API
-      # There are filtering options using for != null but
-      #  that might mean we need to no only construct the entire schema
-      #  but REconstruct the object after filtering
-      # We may be able to use compact() later or a conditional
-      # Ref: https://github.com/hashicorp/terraform/issues/28264#issuecomment-831941670
-      # Ref: https://github.com/hashicorp/terraform/issues/19898
-      delete = optional(map(any), {})
-      force_merge = optional(object({
-        max_num_segments       = number
-        wait_for_completion    = optional(bool)
-        task_execution_timeout = optional(string)
+    properties = object({
+      actions = set(object({
+        retry = object({
+          count   = number
+          backoff = optional(string)
+          delay   = optional(string)
+        })
+        # TODO: current issue is this
+        # Either we make this entire actions set arbitrary maps
+        # Or we need to make the unset keys disappear
+        #  as the key = null fouls against the API
+        # There are filtering options using for != null but
+        #  that might mean we need to no only construct the entire schema
+        #  but REconstruct the object after filtering
+        # We may be able to use compact() later or a conditional
+        # Ref: https://github.com/hashicorp/terraform/issues/28264#issuecomment-831941670
+        # Ref: https://github.com/hashicorp/terraform/issues/19898
+        delete = optional(map(any), {})
+        force_merge = optional(object({
+          max_num_segments       = number
+          wait_for_completion    = optional(bool)
+          task_execution_timeout = optional(string)
+        }))
       }))
-    }))
-    transitions = set(object({
-      state_name = string
-      conditions = map(any)
-    }))
+      transitions = set(object({
+        state_name = string
+        conditions = map(any)
+      }))
+    })
   }))
 }
 

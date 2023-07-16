@@ -13,9 +13,16 @@ locals {
     }
   }
   # TODO: remove after development
-  filtered_actions = [for obj in var.states[*] :
-    obj if obj != null
-  ]
+  states = { for property, value_list in var.states[0].properties : property =>
+    [for value in value_list :
+      { for key, val in value : (key) => value[key] if val != null } if length(value_list) > 0
+      # { for key, val in value : (key) => value[key] if(val) } if length(value_list) > 0
+      # { for key, val in value : (key) => value[key] if(val ? true : false) } if length(value_list) > 0
+      # { for key, val in value : (key) => value[key] if val } if length(value_list) > 0
+      # { for key, val in value : (key) => value[key] if length(coalescelist(val, [])) != 0 } if length(value_list) > 0
+      # { for key, val in value : (key) => value[key] if coalesce(val, "fail") != "fail" } if length(value_list) > 0
+    ]
+  }
 }
 
 # TODO: remove after development
